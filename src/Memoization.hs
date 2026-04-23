@@ -147,9 +147,24 @@ dropLast :: [a] -> [a]
 dropLast l = take (length l - 1) l
 
 -- Slow version
+-- >>> lps "writers"
+-- "rir"
+-- >>> lps "kayak"
+-- "kayak"
+-- >>> lps "af**e**rociou**s****m**on**a****d****a**te**m**yham**s**t**e**r"
 lps :: String -> String
-lps s = undefined
-
+lps s = case s of
+  [] -> []
+  [x] -> [x]
+  (x:xs) ->
+    if x == last xs then
+      x : lps (dropLast xs) ++ [x]
+    else
+      let a = lps xs
+          b = lps (x: dropLast xs)
+      in if length a > length b then a else b
+   
+   
 -- CACHES FOR LISTS OF THINGS
 
 -- If we want caches for lists, it's more complicated...
