@@ -56,27 +56,29 @@ runFast = fastFibo1 30
 
 -- We can make another cache, that works with keys and values
 -- We pass the function and the domain of the keys as an argument
+
+-- >>> listCache [1, 2, 3] (\x -> 2*x) == [(1,2), (2,4), (3,6)]
+-- True
 listCache :: [a] -> (a -> b) -> [(a, b)]
-{- TO BE WRITTEN -}
-listCache domain f = undefined
+listCache domain f = [(x, f x) | x <- domain]
 
 -- We create a function which looks up the
 -- result in the cache
 -- and use fromJust to get an error if the cache misses.
+
+-- >>> listLookup [('a', 'b'), ('c', 'd')] 'c' == 'd'
+-- True
 listLookup :: Eq a => [(a, b)] -> a -> b
-{- TO BE WRITTEN -}
-listLookup cache value = undefined
+listLookup cache value = fromJust $ lookup value cache
 
 -- Create the cache for all integers...
 -- We use a 'fast fibonacci function' even if we haven't defined it yet!
 fibCache :: [(Int, Int)]
-{- TO BE WRITTEN -}
-fibCache = undefined
+fibCache = listCache [0..] fastFibo2
 
 -- And the fast function looks in the cache!
 fastFibo2 :: Int -> Int
-{- TO BE WRITTEN -}
-fastFibo2 n = undefined
+fastFibo2 n = listLookup fibCache n
 
 -- Pause:
 -- We make the solution in two parts:
