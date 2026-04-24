@@ -180,8 +180,15 @@ data Trie node edge = Trie node [(edge, Trie node edge)]
 
 -- First, looking for a list in a trie...
 trieLookup :: Eq e => Trie a e -> [e] -> a
-{- TO BE WRITTEN -}
-trieLookup t l = undefined
+trieLookup (Trie value children) l =
+  case l of
+    [] -> value
+    (x:xs) ->
+      let subtree = _
+      in trieLookup subtree xs
+
+
+
 
 -- Get a subset of a trie, with limited depth
 -- (Provided: Useful for debugging)
