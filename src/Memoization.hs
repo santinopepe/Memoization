@@ -184,8 +184,8 @@ trieLookup (Trie value children) l =
   case l of
     [] -> value
     (x:xs) ->
-      let subtree = _
-      in trieLookup subtree xs
+      let nextTrie = fromJust $ lookup x children
+      in trieLookup nextTrie xs
 
 
 
