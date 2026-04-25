@@ -280,13 +280,22 @@ l2 = "functionalprogrammingrules"
 s1 = "bananrepubliksinvasionsarmestabsadjutant"
 s2 = "kontrabasfiolfodralmakarmästarlärling"
 
-openLPS :: (String -> String) -> (String -> String)
-openLPS s = undefined -- look at 'lps' for inspiration
-
+openLPS :: (String -> String) -> String -> String
+openLPS f s = case s of
+  [] -> []
+  [x] -> [x]
+  (x:xs) ->
+    if x == last xs then
+      x : (f (dropLast xs) ++ [x])
+    else
+      let a = f xs
+          b = f (x: dropLast xs)
+      in if length a > length b then a else b
 -- Fast!
 fastLPS :: String -> String
-fastLPS s =
-  undefined
+fastLPS =
+  let cache = trieCache ['a'..'z'] (openLPS fastLPS)
+  in trieLookup cache
 
 -- So, what were the tricks?
 -- The first one is to build an infinite data-structure, to memoize the function
