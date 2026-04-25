@@ -200,16 +200,14 @@ limitTrie n (Trie v edges) =
 -- Map a function over all values in the trie
 -- Edge labels stay the same.
 mapTrie :: (a -> b) -> Trie a e -> Trie b e
-{- TO BE WRITTEN -}
-mapTrie f (Trie v cs) = undefined
+mapTrie f (Trie v cs) = Trie (f v) [(l, mapTrie f t) | (l, t) <- cs]
 
 -- To build an infinite trie, we start from the root
 -- The root starts with the empty list...
 -- And from that, we have a number of edges
 -- The domain 'dom' defines how many edges we have per node
 rootTrie :: [a] -> Trie [a] a
-{- TO BE WRITTEN -}
-rootTrie domain = undefined
+rootTrie domain = Trie [] (edges domain [])
 
 -- How do we create the edges?
 -- We look at the domain,
@@ -219,8 +217,7 @@ rootTrie domain = undefined
 -- the domain, the current label
 -- and the current node
 edges :: [a] -> [a] -> [(a, Trie [a] a)]
-{- TO BE WRITTEN -}
-edges domain currentNode = undefined
+edges domain currentNode = [(x, subtree domain x currentNode) | x <- domain]
 
 -- How do we build the subtree?
 -- We use the label we just followed
@@ -228,17 +225,16 @@ edges domain currentNode = undefined
 -- And each child creates more edges!
 -- (using the edges function)
 subtree :: [a] -> a -> [a] -> Trie [a] a
-{- TO BE WRITTEN -}
 subtree domain label parent =
-  undefined
+  let currentNode = parent ++ [label]
+  in Trie currentNode (edges domain currentNode)
 
 -- Important: the trie is infinite because edges calls subtree, and subtree calls edges.
 
 -- trieCache builds a cache for a function
 -- provided with a domain (for the list elements)
 trieCache :: [e] -> ([e] -> b) -> Trie b e
-{- TO BE WRITTEN -}
-trieCache domain function = undefined
+trieCache domain function = mapTrie function $ rootTrie domain
 
 {--
 You can inspect the cache with GHCI!
@@ -264,6 +260,7 @@ And then, you can do
 Prints the cache, and you should be able to see it has grown
 --}
 
+testTrie :: [Char] -> [Char]
 testTrie =
   let cache = mapTrie reverse $ rootTrie ['a'..'z']
   in trieLookup cache
