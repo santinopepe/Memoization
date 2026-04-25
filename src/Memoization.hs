@@ -127,8 +127,8 @@ testMemoize n =
 -- It isn't really recursive anymore
 -- And it's easy to implement fibonacci again: (openFib fibo) does that.
 openFib :: (Int -> Int) -> Int -> Int
-openFibo _ 0 = 0
-openFibo _ 1 = 1
+openFib _ 0 = 0
+openFib _ 1 = 1
 openFib f n = f (n-1) + f (n-2)
 
 -- We use openFib to create a cached function, and make sure
