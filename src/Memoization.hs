@@ -294,7 +294,8 @@ openLPS f s = case s of
 -- Fast!
 fastLPS :: String -> String
 fastLPS =
-  let cache = trieCache ['a'..'z'] (openLPS fastLPS)
+  let domain = ['a'..'z'] ++ ['A'..'Z'] ++ "åäöÅÄÖ"
+      cache = trieCache domain (openLPS fastLPS)
   in trieLookup cache
 
 -- So, what were the tricks?
