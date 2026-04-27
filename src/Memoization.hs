@@ -281,6 +281,16 @@ l2 = "functionalprogrammingrules"
 s1 = "bananrepubliksinvasionsarmestabsadjutant"
 s2 = "kontrabasfiolfodralmakarmästarlärling"
 
+-- >>> openLPS lps k1
+-- "rir"
+
+-- >>> openLPS lps k2
+-- "ntn"
+
+-- >>> openLPS lps l1  it takes a long time to run with the naive lps
+-- "esmadamse"
+
+
 openLPS :: (String -> String) -> String -> String
 openLPS f s = case s of
   [] -> []
@@ -293,6 +303,20 @@ openLPS f s = case s of
           b = f (x: dropLast xs)
       in if length a > length b then a else b
 -- Fast!
+
+-- >>> fastLPS k1
+-- "rir"
+-- >>> fastLPS k2
+-- "ntn"
+-- >>> fastLPS l1
+-- "esmadamse"
+-- >>> fastLPS l2
+-- "uniarorainu"
+-- >>> fastLPS s1
+-- "naubsasisasbuan"
+-- >>> fastLPS s2
+-- "nrlramakamarlrn"
+
 fastLPS :: String -> String
 fastLPS =
   let domain = ['a'..'z'] ++ ['A'..'Z'] ++ "åäöÅÄÖ"
