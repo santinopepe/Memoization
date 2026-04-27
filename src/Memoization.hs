@@ -1,3 +1,4 @@
+-- Pilar Frutos and Santino Pepe
 module Memoization where
 
 -- This is an assignment where we try to memoize functions
